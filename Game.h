@@ -5,9 +5,6 @@
 #include "Camera.h"
 #include "Entity.h"
 
-#define SCREEN_WIDTH	800
-#define SCREEN_HEIGHT	600
-
 class Game
 {
 public:
@@ -15,14 +12,16 @@ public:
 	virtual ~Game(void);
 
 	bool init();
-	bool Loop();
-	void Finalize();
+	bool loop();
+	void finalize();
 
 	//Input
-	void ReadKeyboard(unsigned char key, int x, int y, bool press);
-	void ReadMouse(int button, int state, int x, int y);
+	void readKeyboard(unsigned char key, int x, int y, bool press);
+	void readMouse(int button, int state, int x, int y);
+	void readMousePosition(int x, int y);
+
 	//Process
-	bool Process();
+	bool process();
 	//Output
 	void render();
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Globals.h"
+#include "Data.h"
 
 class Entity
 {
@@ -8,13 +9,15 @@ public:
 	~Entity(void);
 
 	void init();
-	void render();
+	void render(Data *data);
 
 	void moveX(float velocity);
 	void moveZ(float velocity);
 
-private:
 	float x ,y ,z;
-	GLUquadricObj *mesh;
+	float rot;
+
+private:
+
 };
 

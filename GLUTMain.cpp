@@ -13,29 +13,31 @@ void AppRender()
 }
 void AppKeyboard(unsigned char key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,true);
+	game.readKeyboard(key,x,y,true);
 }
 void AppKeyboardUp(unsigned char key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,false);
+	game.readKeyboard(key,x,y,false);
 }
 void AppSpecialKeys(int key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,true);
+	game.readKeyboard(key,x,y,true);
 }
 void AppSpecialKeysUp(int key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,false);
+	game.readKeyboard(key,x,y,false);
 }
 void AppMouse(int button, int state, int x, int y)
 {
-	game.ReadMouse(button,state,x,y);
+	game.readMouse(button,state,x,y);
 }
 void AppIdle()
 {
-	if(!game.Loop()) exit(0);
+	if(!game.loop()) exit(0);
 }
-
+void AppMouseMotion(int x, int y) {
+	game.readMousePosition(x, y);
+}
 void main(int argc, char** argv)
 {
 	int res_x,res_y,pos_x,pos_y;
@@ -60,7 +62,7 @@ void main(int argc, char** argv)
 	glutEnterGameMode();*/
 
 	//Make the default cursor disappear
-	//glutSetCursor(GLUT_CURSOR_NONE);
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	//Register callback functions
 	glutDisplayFunc(AppRender);			
@@ -70,6 +72,7 @@ void main(int argc, char** argv)
 	glutSpecialUpFunc(AppSpecialKeysUp);
 	glutMouseFunc(AppMouse);
 	glutIdleFunc(AppIdle);
+	glutPassiveMotionFunc(AppMouseMotion);
 
 	//Game initializations
 	game.init();

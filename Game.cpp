@@ -8,74 +8,71 @@ Game::~Game(void){}
 bool Game::init()
 {
 	bool res=true;
-	camera.init();
 
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0,(float)SCREEN_WIDTH/(float)SCREEN_HEIGHT,0.1,100);
-	glMatrixMode(GL_MODELVIEW);
-	
 	glEnable(GL_DEPTH_TEST);
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
 	//Scene initialization
-	res = data.LoadImage(IMG_WALL,"wall.png",GL_RGBA);
-	if(!res) return false;
-	res = data.LoadImage(IMG_FLOOR,"floor.png",GL_RGBA);
-	if(!res) return false;
-	res = data.LoadImage(IMG_ROOF,"roof.png",GL_RGBA);
+	entity.init();
+	camera.init(&entity);
+	data.init();
 	if(!res) return false;
 
 	return res;
 }
 
-bool Game::Loop()
+bool Game::loop()
 {
 	bool res=true;
 
-	res = Process();
+	res = process();
 	if(res) render();
 
 	return res;
 }
 
-void Game::Finalize()
+void Game::finalize()
 {
 }
 
 //Input
-void Game::ReadKeyboard(unsigned char key, int x, int y, bool press)
+void Game::readKeyboard(unsigned char key, int x, int y, bool press)
 {
 	keys[key] = press;
 }
 
-void Game::ReadMouse(int button, int state, int x, int y)
+void Game::readMouse(int button, int state, int x, int y)
 {
 }
 
+void Game::readMousePosition(int x, int y){
+	camera.setRotation(x,y);
+}
+
+
 //Process
-bool Game::Process()
+bool Game::process()
 {
 	bool res=true;
 	
 	//Process Input
 	if(keys[27])	res=false;	
-	
+	if(keys['1']){
+		camera.setState(STATE_THIRD_PERSON);
+	}
 	else if(keys['2']){
-		camera.setState(STATE_2);
+		camera.setState(STATE_TOP);
 	}
 	else if(keys['3']){
-		camera.setState(STATE_3);
+		camera.setState(STATE_FIRST_PERSON);
 	}
-	else if(keys['4']){
-        camera.setState(STATE_4);
-	}
-	else if(keys['5']){
-		camera.setState(STATE_5);
-	}
+	if(keys['w']||keys['W']) entity.moveZ(-VELOCITY_ENTITY);
+	if(keys['s']||keys['S']) entity.moveZ(VELOCITY_ENTITY);
+	if(keys['a']||keys['A']) entity.moveX(-VELOCITY_ENTITY);
+	if(keys['d']||keys['D']) entity.moveX(VELOCITY_ENTITY);
 
 	return res;
 }
@@ -87,8 +84,8 @@ void Game::render()
 	glLoadIdentity();
 	
 	camera.render();
-
 	scene.render(&data);
+	if(camera.state != STATE_FIRST_PERSON) entity.render(&data);
 
 	glutSwapBuffers();
 }

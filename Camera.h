@@ -1,12 +1,12 @@
 #pragma once
 
 #include"Globals.h"
+#include "Entity.h"
 
-#define STATE_DEFAULT		0
-#define STATE_2				1
-#define STATE_3				2
-#define STATE_4				3
-#define STATE_5				4
+#define STATE_THIRD_PERSON	0
+#define STATE_TOP			1
+#define STATE_FIRST_PERSON	2
+
 
 class Camera
 {
@@ -14,14 +14,19 @@ public:
 	Camera(void);
 	~Camera(void);
 
-	void init();
+	void init(Entity *player);
 
 	void setState(int state);
+	void setRotation(int x, int y);
 
 	void render();
+	
+	int state;
+	float xRot, yRot;
 
 private: 
-	int state;
-	//int x, y, z;
+	float xPos, yPos, zPos;
+
+	Entity *player;
 };
 
