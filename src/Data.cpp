@@ -5,10 +5,10 @@ Data::~Data(void){}
 
 bool Data::init() {
 	bool res = true;
-	res = res && LoadImage(IMG_WALL,"wall.png",GL_RGBA);
-	res = res && LoadImage(IMG_FLOOR,"floor.png",GL_RGBA);
-	res = res && LoadImage(IMG_ROOF,"roof.png",GL_RGBA);
-	res = res && LoadImage(IMG_SUN, "sun.jpg", GL_RGBA);
+	res = res && LoadImage(IMG_WALL,"assets/textures/wall.png",GL_RGBA);
+	res = res && LoadImage(IMG_FLOOR,"assets/textures/floor.png",GL_RGBA);
+	res = res && LoadImage(IMG_ROOF,"assets/textures/roof.png",GL_RGBA);
+	res = res && LoadImage(IMG_SUN, "assets/textures/sun.jpg", GL_RGBA);
 	return res;
 }
 
