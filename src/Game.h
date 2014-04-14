@@ -1,9 +1,11 @@
 #pragma once
+#pragma comment(lib,"MD2Model")
 
 #include "Scene.h"
 #include "Data.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "MD2Model.h"
 
 class Game
 {
@@ -12,7 +14,7 @@ public:
 	virtual ~Game(void);
 
 	bool init();
-	bool loop();
+	bool Loop();
 	void finalize();
 
 	//Input
@@ -31,4 +33,5 @@ private:
 	Data data;
 	Camera camera;
 	Entity entity;
+	MD2Model models[6];
 };

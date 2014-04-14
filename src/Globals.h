@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <gl/glut.h>
+#include <glut.h>
 
 #define RADIAN		0.0174532925
 

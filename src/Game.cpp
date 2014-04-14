@@ -21,10 +21,22 @@ bool Game::init()
 	data.init();
 	if(!res) return false;
 
+	//Models initialization
+	char *s[] = {"bauul","rat","knight","boost","hammer","teleporter"};
+	for(int i=0;i<6;i++)
+	{
+		res = models[i].Load(s[i]);
+		if(!res) return false;
+	}
+
+	models[0].SetAnimation(ANIM_STAND);
+	models[1].SetAnimation(ANIM_RUN);
+	models[2].SetAnimation(ANIM_JUMP);
+
 	return res;
 }
 
-bool Game::loop()
+bool Game::Loop()
 {
 	bool res=true;
 
@@ -83,6 +95,14 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	
+	glTranslatef(0.0f,-2.0f,-10.0f);
+	//glRotatef(20,1.0f,0.0f,0.0f);
+
+	static float n=0; n+=0.01;
+	models[0].Render(-3,0,0,  -90,0,   0 + (int)n%40,1,  1,1,  0,0,0);
+	models[1].Render( 0,0,0,  -90,0,  40 + (int)n% 6,1,	 1,1,  0,0,0);
+	models[2].Render( 3,0,0,  -90,0,  66 + (int)n% 6,1,  1,1,  0,0,0);
+
 	camera.render();
 	scene.render(&data);
 	if(camera.state != STATE_FIRST_PERSON) entity.render(&data);

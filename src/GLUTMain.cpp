@@ -33,7 +33,7 @@ void AppMouse(int button, int state, int x, int y)
 }
 void AppIdle()
 {
-	if(!game.loop()) exit(0);
+	if(!game.Loop()) exit(0);
 }
 void AppMouseMotion(int x, int y) {
 	game.readMousePosition(x, y);
